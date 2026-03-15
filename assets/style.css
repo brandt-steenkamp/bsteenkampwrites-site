@@ -31,6 +31,11 @@ body {
   color: #000;
 }
 
+/* Paragraph spacing */
+p {
+  margin-bottom: 1rem;
+}
+
 /* Links */
 a {
   color: #0044cc;
@@ -40,12 +45,15 @@ a {
 a:focus,
 a:hover {
   outline: 2px solid #000;
+  outline-offset: 2px;
   background-color: #ffff00;
   color: #000;
 }
 
 /* Headings */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin-bottom: 1rem;
   font-weight: bold;
 }
@@ -62,14 +70,23 @@ hr {
   margin: 2rem 0;
 }
 
+/* Skip link */
 .skip-link {
   position: absolute;
   left: -9999px;
+  top: auto;
 }
 
 .skip-link:focus {
   position: static;
   left: auto;
+  top: auto;
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffff00;
+  color: #000;
+  outline: 2px solid #000;
 }
 
 /* Responsive layout adjustments */
