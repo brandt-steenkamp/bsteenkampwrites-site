@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Brandt Steenkamp">
+  <meta name="description" content="Satire by Brandt Steenkamp: forensic mockery, weaponized humor, and sharpened essays aimed at technology, culture, and the systems that deserve it.">
+  <meta name="robots" content="index, follow">
+  <title>Satire | B Steenkamp Writes</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div id="nav-placeholder"></div>
+
+  <main id="main-content">
+    <section aria-labelledby="satire-page-title">
+      <h1 id="satire-page-title">Satire</h1>
+
+      <p>
+        This is where the sharp-edged work lives: satire, mock manifestos, hostile love letters to broken systems,
+        and the occasional public execution of stupid ideas.
+      </p>
+
+      <p>
+        The pieces below are written as character-driven rants, false speeches, and controlled demolitions of the
+        myths people keep swallowing whole.
+      </p>
+    </section>
+
+    <section aria-labelledby="published-satire">
+      <h2 id="published-satire">Published Pieces</h2>
+
+      <article aria-labelledby="jobs-piece-title">
+        <h3 id="jobs-piece-title">
+          <a href="/satire/STEVEJOBS_ANTYMACOS.html">Designed to Obey</a>
+        </h3>
+        <p><strong>A Walled Garden Rant in the Voice of Steve Jobs</strong></p>
+        <p>
+          A brutal satire of design authoritarianism, locked ecosystems, and the polished theology of control
+          masquerading as elegance.
+        </p>
+      </article>
+
+      <article aria-labelledby="trump-piece-title">
+        <h3 id="trump-piece-title">
+          <a href="/satire/A_Statement_on_Technology_by_Donald_J_Trump.html">Open Source? Nobody Does Open Like Me.</a>
+        </h3>
+        <p><strong>A Statement on Technology by Donald J. Trump</strong></p>
+        <p>
+          A satire of open source chaos, maintainer abuse, corporate freeloading, and the strange religion of
+          shipping broken things with confidence.
+        </p>
+      </article>
+    </section>
+
+    <section aria-labelledby="more-coming">
+      <h2 id="more-coming">More Coming</h2>
+      <p>
+        This section is growing. Slowly, violently, and on purpose.
+      </p>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    fetch('/nav.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+
+    fetch('/foot.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+</body>
+</html>
