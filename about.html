@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Brandt Steenkamp">
+  <meta name="description" content="About Brandt Steenkamp: writer, satirist, and developer of accessibility-focused software.">
+  <meta name="robots" content="index, follow">
+
+  <title>About | B Steenkamp Writes</title>
+
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div id="nav-placeholder"></div>
+
+<main id="main-content">
+
+<section aria-labelledby="about-header">
+<h1 id="about-header">About</h1>
+
+<p>
+My name is Brandt Steenkamp. I write satire, romance, essays, and the occasional technical rant.
+</p>
+
+<p>
+Alongside writing, I build and contribute to software projects, mainly focused on accessibility and tools for blind or low-vision users.
+</p>
+
+<p>
+This website is my home base on the internet. It hosts my satire, software projects, and eventually my books.
+</p>
+
+<p>
+The site is intentionally simple, fast, and accessible. No trackers, no ads, and no unnecessary nonsense.
+</p>
+
+</section>
+
+
+<section aria-labelledby="writing-header">
+
+<h2 id="writing-header">Writing</h2>
+
+<p>
+My writing ranges from brutal satire to trauma-informed romance.
+</p>
+
+<p>
+Satire is where I sharpen the knives. Romance is where I put the heart back together again.
+</p>
+
+</section>
+
+
+<section aria-labelledby="software-header">
+
+<h2 id="software-header">Software</h2>
+
+<p>
+I also work on accessibility-related software projects, particularly tools that make technology easier to use for blind users.
+</p>
+
+<p>
+Most of this work is open source and available on GitHub.
+</p>
+
+</section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script>
+fetch('/nav.html')
+.then(res => res.text())
+.then(data => document.getElementById('nav-placeholder').innerHTML = data);
+
+fetch('/foot.html')
+.then(res => res.text())
+.then(data => document.getElementById('footer-placeholder').innerHTML = data);
+</script>
+
+</body>
+</html>

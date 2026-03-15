@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Brandt Steenkamp">
+  <meta name="description" content="Contact Brandt Steenkamp.">
+  <meta name="robots" content="index, follow">
+
+  <title>Contact | B Steenkamp Writes</title>
+
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div id="nav-placeholder"></div>
+
+<main id="main-content">
+
+<section aria-labelledby="contact-header">
+<h1 id="contact-header">Contact</h1>
+
+<p>
+If you would like to get in touch, you can contact me using the channels below.
+</p>
+
+</section>
+
+
+<section aria-labelledby="email-header">
+
+<h2 id="email-header">Email</h2>
+
+<p>
+<a href="mailto:contact@bsteenkampwrites.com">
+contact@bsteenkampwrites.com
+</a>
+</p>
+
+</section>
+
+
+<section aria-labelledby="social-header">
+
+<h2 id="social-header">Social Media</h2>
+
+<p>
+You can also follow my work on these platforms:
+</p>
+
+<ul>
+
+<li>
+<a href="https://mastodon.social/@BrandtSteenkamp">
+Mastodon
+</a>
+</li>
+
+<li>
+<a href="https://twitter.com/BrandtSteenkamp">
+Twitter / X
+</a>
+</li>
+
+<li>
+<a href="https://instagram.com/steenkampbrandt">
+Instagram
+</a>
+</li>
+
+</ul>
+
+<p>
+I do not accept friend requests, but you are welcome to follow.
+</p>
+
+</section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script>
+fetch('/nav.html')
+.then(res => res.text())
+.then(data => document.getElementById('nav-placeholder').innerHTML = data);
+
+fetch('/foot.html')
+.then(res => res.text())
+.then(data => document.getElementById('footer-placeholder').innerHTML = data);
+</script>
+
+</body>
+</html>
