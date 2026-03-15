@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Brandt Steenkamp">
+  <meta name="description" content="Software projects by Brandt Steenkamp, including accessibility tools and contributions to open source projects.">
+  <meta name="robots" content="index, follow">
+
+  <title>Software | B Steenkamp Writes</title>
+
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div id="nav-placeholder"></div>
+
+<main id="main-content">
+
+<section aria-labelledby="software-header">
+<h1 id="software-header">Software</h1>
+
+<p>
+Alongside writing, I build and contribute to software projects, primarily focused on accessibility and tools for blind or low-vision users.
+</p>
+
+<p>
+Most of the work is open source and lives on GitHub.
+</p>
+</section>
+
+
+<section aria-labelledby="projects-header">
+
+<h2 id="projects-header">Projects</h2>
+
+<article aria-labelledby="anvill-title">
+
+<h3 id="anvill-title">ANVILL</h3>
+
+<p>
+ANVILL is an accessibility-focused toolchain for braille translation and publishing workflows.
+</p>
+
+<p>
+It is designed to integrate braille translation tools such as Liblouis into a streamlined workflow for producing accessible documents.
+</p>
+
+<p>
+<a href="https://github.com/brandt-steenkamp/anvill">View the ANVILL repository on GitHub</a>
+</p>
+
+</article>
+
+<article aria-labelledby="icecubes-title">
+
+<h3 id="icecubes-title">Ice Cubes Contributions</h3>
+
+<p>
+Accessibility contributions to the Ice Cubes Mastodon client, including improvements to keyboard navigation and timeline interaction.
+</p>
+
+<p>
+The work focuses on making timelines more usable for keyboard and screen reader users.
+</p>
+
+<p>
+<a href="https://github.com/Dimillian/IceCubesApp">Ice Cubes project on GitHub</a>
+</p>
+
+</article>
+
+</section>
+
+
+<section aria-labelledby="sourcecode-header">
+
+<h2 id="sourcecode-header">Source Code</h2>
+
+<p>
+Most projects and experiments are published on GitHub.
+</p>
+
+<p>
+<a href="https://github.com/brandt-steenkamp">Visit my GitHub profile</a>
+</p>
+
+</section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script>
+fetch('/nav.html')
+.then(res => res.text())
+.then(data => document.getElementById('nav-placeholder').innerHTML = data);
+
+fetch('/foot.html')
+.then(res => res.text())
+.then(data => document.getElementById('footer-placeholder').innerHTML = data);
+</script>
+
+</body>
+</html>
