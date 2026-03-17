@@ -75,14 +75,17 @@ Most of this work is open source and available on GitHub.
 <div id="footer-placeholder"></div>
 
 <script>
-fetch('/nav.html')
-.then(res => res.text())
-.then(data => document.getElementById('nav-placeholder').innerHTML = data);
+  Promise.all([
+    fetch('/nav.html').then(res => res.text()),
+    fetch('/foot.html').then(res => res.text())
+  ]).then(([nav, foot]) => {
+    document.getElementById('nav-placeholder').innerHTML = nav;
+    document.getElementById('footer-placeholder').innerHTML = foot;
 
-fetch('/foot.html')
-.then(res => res.text())
-.then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    const script = document.createElement('script');
+    script.src = '/assets/accessibility.js';
+    document.body.appendChild(script);
+  });
 </script>
-
 </body>
 </html>
