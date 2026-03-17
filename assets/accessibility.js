@@ -1,10 +1,11 @@
-document.addEventListener("DOMContentLoaded", () => {
+function initAccessibility() {
   const button = document.getElementById("fontToggle");
   const status = document.getElementById("font-status");
 
-  if (!button || !status) return;
+  if (!button) return;
 
   function announceStatus(message) {
+    if (!status) return;
     status.textContent = "";
     window.setTimeout(() => {
       status.textContent = message;
@@ -18,10 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
     button.setAttribute("aria-pressed", useSystem ? "true" : "false");
     button.textContent = useSystem ? "Use OpenDyslexic font" : "Use system font";
 
-    if (announce) {
-      announceStatus(useSystem ? "System font active" : "OpenDyslexic font active");
-    } else {
-      status.textContent = useSystem ? "System font active" : "OpenDyslexic font active";
+    if (status) {
+      const message = useSystem ? "System font active" : "OpenDyslexic font active";
+
+      if (announce) {
+        announceStatus(message);
+      } else {
+        status.textContent = message;
+      }
     }
   }
 
@@ -35,4 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("fontPreference", next);
     applyFontPreference(next, true);
   });
-});
+}
+
+initAccessibility();
