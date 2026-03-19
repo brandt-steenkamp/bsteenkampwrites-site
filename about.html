@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Brandt Steenkamp">
-  <meta name="description" content="About Brandt Steenkamp: writer, satirist, and developer of accessibility-focused software.">
+  <meta name="description" content="About Brandt Steenkamp, blind South African writer, satirist, and builder of accessibility-focused software.">
   <meta name="robots" content="index, follow">
 
   <title>About | B Steenkamp Writes</title>
@@ -18,32 +18,46 @@
   <div id="access-placeholder"></div>
 
   <main id="main-content">
-    <section aria-labelledby="about-header">
-      <h1 id="about-header">About</h1>
+    <section aria-labelledby="about-heading">
+      <h1 id="about-heading">About</h1>
 
       <p>My name is Brandt Steenkamp. I write satire, romance, essays, and the occasional technical rant.</p>
 
-      <p>Alongside writing, I build and contribute to software projects, mainly focused on accessibility and tools for blind or low-vision users.</p>
+      <p>I am completely blind, hard of hearing, and live with right-side hemiparesis. When a site is badly designed, it is not inconvenient for me, it is an actual barrier.</p>
 
-      <p>This website is my home base on the internet. It hosts my satire, software projects, and eventually my books.</p>
+      <p>That is why I care about accessibility. Not as a feature, not as a trend, and not as a corporate slogan. As a baseline. If something is built badly, people get shut out. That is the truth of it.</p>
+
+      <p>This website is my home base on the internet. It is where I publish satire, talk about software, and build toward the books and projects still coming.</p>
 
       <p>The site is intentionally simple, fast, and accessible. No trackers, no ads, and no unnecessary nonsense.</p>
     </section>
 
-    <section aria-labelledby="writing-header">
-      <h2 id="writing-header">Writing</h2>
+    <section aria-labelledby="writing-heading">
+      <h2 id="writing-heading">Writing</h2>
 
       <p>My writing ranges from brutal satire to trauma-informed romance.</p>
 
       <p>Satire is where I sharpen the knives. Romance is where I put the heart back together again.</p>
+
+      <p>I am interested in work that actually means something, whether that means making a reader laugh, making them flinch, or making them feel less alone.</p>
     </section>
 
-    <section aria-labelledby="software-header">
-      <h2 id="software-header">Software</h2>
+    <section aria-labelledby="software-heading">
+      <h2 id="software-heading">Software</h2>
 
-      <p>I also work on accessibility-related software projects, particularly tools that make technology easier to use for blind users.</p>
+      <p>I also build and contribute to accessibility-focused software, especially tools that make technology easier to use for blind and low-vision users.</p>
 
-      <p>Most of this work is open source and available on GitHub.</p>
+      <p>I care about software that works in the real world, under real pressure, for people who do not get the luxury of bad design.</p>
+
+      <p>Much of that work is open source and available on GitHub.</p>
+    </section>
+
+    <section aria-labelledby="closing-heading">
+      <h2 id="closing-heading">What this site is for</h2>
+
+      <p>This site exists to hold the work in one place: writing, software, ideas, and whatever else I build next.</p>
+
+      <p>If you are here for satire, welcome. If you are here for accessibility work, welcome. If you are here because you are tired of polished nonsense and want something with teeth, you are in the right place.</p>
     </section>
   </main>
 
@@ -53,48 +67,6 @@
     <p>This site uses JavaScript to load navigation, accessibility controls, and footer content. JavaScript is currently disabled.</p>
   </noscript>
 
-  <script>
-    async function loadPartials() {
-      const partials = [
-        { url: "/nav.html", target: "nav-placeholder" },
-        { url: "/access.html", target: "access-placeholder" },
-        { url: "/foot.html", target: "footer-placeholder" }
-      ];
-
-      try {
-        const responses = await Promise.all(
-          partials.map(async ({ url, target }) => {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
-            }
-
-            const html = await response.text();
-            return { html, target };
-          })
-        );
-
-        responses.forEach(({ html, target }) => {
-          const container = document.getElementById(target);
-
-          if (!container) {
-            throw new Error(`Missing placeholder: #${target}`);
-          }
-
-          container.innerHTML = html;
-        });
-
-        const script = document.createElement("script");
-        script.src = "/assets/accessibility.js";
-        script.defer = true;
-        document.body.appendChild(script);
-      } catch (error) {
-        console.error("Partial load failed:", error);
-      }
-    }
-
-    loadPartials();
-  </script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>

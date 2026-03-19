@@ -50,59 +50,6 @@
     <p>This site uses JavaScript to load navigation, accessibility controls, footer content, and the email link. JavaScript is currently disabled.</p>
   </noscript>
 
-  <script>
-    async function loadPartials() {
-      const partials = [
-        { url: "/nav.html", target: "nav-placeholder" },
-        { url: "/access.html", target: "access-placeholder" },
-        { url: "/foot.html", target: "footer-placeholder" }
-      ];
-
-      try {
-        const responses = await Promise.all(
-          partials.map(async ({ url, target }) => {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
-            }
-
-            const html = await response.text();
-            return { html, target };
-          })
-        );
-
-        responses.forEach(({ html, target }) => {
-          const container = document.getElementById(target);
-
-          if (!container) {
-            throw new Error(`Missing placeholder: #${target}`);
-          }
-
-          container.innerHTML = html;
-        });
-
-        const user = "contact";
-        const domain = "bsteenkampwrites.com";
-        const subject = "Website Contact";
-        const email = `${user}@${domain}`;
-
-        const emailContainer = document.getElementById("email-link");
-        if (emailContainer) {
-          emailContainer.innerHTML =
-            `<a href="mailto:${email}?subject=${encodeURIComponent(subject)}">${email}</a>`;
-        }
-
-        const script = document.createElement("script");
-        script.src = "/assets/accessibility.js";
-        script.defer = true;
-        document.body.appendChild(script);
-      } catch (error) {
-        console.error("Partial load failed:", error);
-      }
-    }
-
-    loadPartials();
-  </script>
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>
