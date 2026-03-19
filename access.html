@@ -1,0 +1,49 @@
+<section aria-labelledby="accessibility-heading" class="accessibility-panel">
+  <h2 id="accessibility-heading">Accessibility preferences</h2>
+  <p id="accessibility-help">
+    Adjust font and reading width for comfort.
+  </p>
+
+  <div id="accessibility-status" aria-live="polite" class="visually-hidden"></div>
+
+  <div class="accessibility-control">
+    <button
+      type="button"
+      id="fontToggle"
+      aria-pressed="false"
+      aria-describedby="accessibility-help">
+      Use OpenDyslexic font
+    </button>
+  </div>
+
+  <fieldset class="accessibility-control" aria-describedby="accessibility-help">
+    <legend>Reading width</legend>
+
+    <div>
+      <input
+        type="radio"
+        id="width-standard"
+        name="reading-width"
+        value="standard">
+      <label for="width-standard">Standard width</label>
+    </div>
+
+    <div>
+      <input
+        type="radio"
+        id="width-narrow"
+        name="reading-width"
+        value="narrow">
+      <label for="width-narrow">Narrow width</label>
+    </div>
+
+    <div>
+      <input
+        type="radio"
+        id="width-extra"
+        name="reading-width"
+        value="extra">
+      <label for="width-extra">Extra narrow width</label>
+    </div>
+  </fieldset>
+</section>

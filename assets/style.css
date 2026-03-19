@@ -1,82 +1,219 @@
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/fonts/OpenDyslexic3-Regular.woff2') format('woff2');
-  font-weight: normal;
+  font-family: "OpenDyslexic";
+  src: url("/fonts/OpenDyslexic3-Regular.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/fonts/OpenDyslexic3-Bold.woff2') format('woff2');
-  font-weight: bold;
+  font-family: "OpenDyslexic";
+  src: url("/fonts/OpenDyslexic3-Bold.woff2") format("woff2");
+  font-weight: 700;
   font-style: normal;
 }
 
 :root {
-  --font-family-base: 'OpenDyslexic', sans-serif;
+  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --reading-width: 70ch;
+  --page-max-width: 90rem;
+
+  --focus-outline: 2px solid #000;
+  --focus-bg: #ffff00;
+
+  --link-color: #0044cc;
+  --link-visited: #5a2ca0;
+
+  --text-color: #000;
+  --bg-color: #fff;
+  --border-color: #000;
 }
 
-/* Global element reset */
-* {
+/* Global reset */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-/* Base layout styling */
+html {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 body {
-  max-width: 70ch;
-  margin: 2rem auto;
-  padding: 1rem;
+  margin: 0;
+  padding: 2rem 1rem;
   font-family: var(--font-family-base);
   font-size: 1.125rem;
   line-height: 1.6;
-  background-color: #fff;
-  color: #000;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-/* FORCE override when system font is active */
-body.system-font {
-  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-family: var(--font-family-base);
+/* Keep overall page layout sane */
+body > * {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
 }
 
-/* Paragraph spacing */
+/* Constrain actual reading content only */
+main,
+article {
+  max-width: var(--reading-width);
+  margin-inline: auto;
+}
+
+/* Font modes */
+body.font-dyslexic {
+  --font-family-base: "OpenDyslexic", sans-serif;
+}
+
+/* Width modes */
+body.width-standard {
+  --reading-width: 70ch;
+}
+
+body.width-narrow {
+  --reading-width: 60ch;
+}
+
+body.width-extra {
+  --reading-width: 55ch;
+}
+
+/* Typography */
 p {
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
+}
+
+ul,
+ol {
+  margin: 0 0 1rem 1.5rem;
+  padding: 0;
+}
+
+li + li {
+  margin-top: 0.35rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h2,
+h3 {
+  margin-top: 1.75rem;
 }
 
 /* Links */
 a {
-  color: #0044cc;
+  color: var(--link-color);
   text-decoration: underline;
 }
 
-a:focus,
-a:hover {
-  outline: 2px solid #000;
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover,
+a:focus {
+  outline: var(--focus-outline);
   outline-offset: 2px;
-  background-color: #ffff00;
+  background-color: var(--focus-bg);
   color: #000;
 }
 
-/* Headings */
-h1,
-h2,
-h3 {
-  margin-bottom: 1rem;
-  font-weight: bold;
+/* Form controls */
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
-/* Footer nav styling */
+button,
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Navigation */
+nav a {
+  display: inline-block;
+  margin-right: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Accessibility panel */
+.accessibility-panel {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+}
+
+.accessibility-panel h2 {
+  margin-top: 0;
+}
+
+.accessibility-panel p {
+  margin-bottom: 1rem;
+}
+
+.accessibility-control + .accessibility-control {
+  margin-top: 1rem;
+}
+
+.accessibility-control button {
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.accessibility-control button[aria-pressed="true"] {
+  background-color: var(--focus-bg);
+}
+
+fieldset.accessibility-control {
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem 1rem;
+}
+
+fieldset.accessibility-control legend {
+  font-weight: 700;
+  padding: 0 0.25rem;
+}
+
+.accessibility-control label {
+  margin-left: 0.35rem;
+}
+
+.accessibility-control div + div {
+  margin-top: 0.5rem;
+}
+
+/* Footer */
 footer nav a {
   margin-right: 0.5rem;
 }
 
-/* High contrast compliant separator */
+/* Horizontal rule */
 hr {
   border: none;
-  border-top: 2px solid #000;
+  border-top: 2px solid var(--border-color);
   margin: 2rem 0;
 }
 
@@ -84,43 +221,54 @@ hr {
 .skip-link {
   position: absolute;
   left: -9999px;
-  top: auto;
+  top: 0;
 }
 
 .skip-link:focus {
   position: static;
-  left: auto;
-  top: auto;
   display: inline-block;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
-  background-color: #ffff00;
+  background-color: var(--focus-bg);
   color: #000;
-  outline: 2px solid #000;
+  outline: var(--focus-outline);
 }
 
-/* Responsive layout adjustments */
+/* Screen-reader-only content */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 
+/* Responsive */
 @media (max-width: 900px) {
   body {
-    margin: 1.5rem auto;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     font-size: 1.1rem;
   }
 }
 
 @media (max-width: 600px) {
   body {
-    margin: 1rem auto;
-    padding: 0.75rem;
+    padding: 1rem 0.75rem;
     font-size: 1rem;
+  }
+
+  .accessibility-panel {
+    padding: 0.85rem;
   }
 }
 
 @media (max-width: 400px) {
   body {
-    margin: 0.75rem auto;
-    padding: 0.5rem;
+    padding: 0.75rem 0.5rem;
     font-size: 0.95rem;
   }
 }

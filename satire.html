@@ -6,13 +6,16 @@
   <meta name="author" content="Brandt Steenkamp">
   <meta name="description" content="Satire by Brandt Steenkamp: forensic mockery, weaponized humor, and sharpened essays aimed at technology, culture, and the systems that deserve it.">
   <meta name="robots" content="index, follow">
+
   <title>Satire | B Steenkamp Writes</title>
+
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div id="nav-placeholder"></div>
+  <div id="access-placeholder"></div>
 
   <main id="main-content">
     <section aria-labelledby="satire-page-title">
@@ -65,18 +68,52 @@
 
   <div id="footer-placeholder"></div>
 
-<script>
-  Promise.all([
-    fetch('/nav.html').then(res => res.text()),
-    fetch('/foot.html').then(res => res.text())
-  ]).then(([nav, foot]) => {
-    document.getElementById('nav-placeholder').innerHTML = nav;
-    document.getElementById('footer-placeholder').innerHTML = foot;
+  <noscript>
+    <p>This site uses JavaScript to load navigation, accessibility controls, and footer content. JavaScript is currently disabled.</p>
+  </noscript>
 
-    const script = document.createElement('script');
-    script.src = '/assets/accessibility.js';
-    document.body.appendChild(script);
-  });
-</script>
+  <script>
+    async function loadPartials() {
+      const partials = [
+        { url: "/nav.html", target: "nav-placeholder" },
+        { url: "/access.html", target: "access-placeholder" },
+        { url: "/foot.html", target: "footer-placeholder" }
+      ];
+
+      try {
+        const responses = await Promise.all(
+          partials.map(async ({ url, target }) => {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+            }
+
+            const html = await response.text();
+            return { html, target };
+          })
+        );
+
+        responses.forEach(({ html, target }) => {
+          const container = document.getElementById(target);
+
+          if (!container) {
+            throw new Error(`Missing placeholder: #${target}`);
+          }
+
+          container.innerHTML = html;
+        });
+
+        const script = document.createElement("script");
+        script.src = "/assets/accessibility.js";
+        script.defer = true;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error("Partial load failed:", error);
+      }
+    }
+
+    loadPartials();
+  </script>
 </body>
 </html>

@@ -6,13 +6,16 @@
   <meta name="author" content="Brandt Steenkamp">
   <meta name="description" content="Designed to Obey, a walled garden rant in the voice of Steve Jobs.">
   <meta name="robots" content="index, follow">
+
   <title>Designed to Obey | B Steenkamp Writes</title>
+
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div id="nav-placeholder"></div>
+  <div id="access-placeholder"></div>
 
   <main id="main-content">
     <article aria-labelledby="page-title">
@@ -190,31 +193,65 @@
       <h2 id="support-heading">Enjoyed this piece?</h2>
 
       <p>
-      If this satire earned its keep, you can
-      <a href="https://paypal.me/brandtsteenkamp" rel="external noopener">buy me a beer</a>.
-    </p>
+        If this satire earned its keep, you can
+        <a href="https://paypal.me/brandtsteenkamp">buy me a beer</a>.
+      </p>
 
-    <p>
-      Coffee I make myself. Beer I can't.
-      Cider I might attempt, but the result will be legally and morally questionable.
-    </p>
-  </section>
+      <p>
+        Coffee I make myself. Beer I can't.
+        Cider I might attempt, but the result will be legally and morally questionable.
+      </p>
+    </section>
   </main>
 
   <div id="footer-placeholder"></div>
 
-<script>
-  Promise.all([
-    fetch('/nav.html').then(res => res.text()),
-    fetch('/foot.html').then(res => res.text())
-  ]).then(([nav, foot]) => {
-    document.getElementById('nav-placeholder').innerHTML = nav;
-    document.getElementById('footer-placeholder').innerHTML = foot;
+  <noscript>
+    <p>This site uses JavaScript to load navigation, accessibility controls, and footer content. JavaScript is currently disabled.</p>
+  </noscript>
 
-    const script = document.createElement('script');
-    script.src = '/assets/accessibility.js';
-    document.body.appendChild(script);
-  });
-</script>
+  <script>
+    async function loadPartials() {
+      const partials = [
+        { url: "/nav.html", target: "nav-placeholder" },
+        { url: "/access.html", target: "access-placeholder" },
+        { url: "/foot.html", target: "footer-placeholder" }
+      ];
+
+      try {
+        const responses = await Promise.all(
+          partials.map(async ({ url, target }) => {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+            }
+
+            const html = await response.text();
+            return { html, target };
+          })
+        );
+
+        responses.forEach(({ html, target }) => {
+          const container = document.getElementById(target);
+
+          if (!container) {
+            throw new Error(`Missing placeholder: #${target}`);
+          }
+
+          container.innerHTML = html;
+        });
+
+        const script = document.createElement("script");
+        script.src = "/assets/accessibility.js";
+        script.defer = true;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error("Partial load failed:", error);
+      }
+    }
+
+    loadPartials();
+  </script>
 </body>
 </html>

@@ -6,71 +6,103 @@
   <meta name="author" content="Brandt Steenkamp">
   <meta name="description" content="Contact Brandt Steenkamp.">
   <meta name="robots" content="index, follow">
+
   <title>Contact | B Steenkamp Writes</title>
+
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div id="nav-placeholder"></div>
+  <div id="access-placeholder"></div>
 
   <main id="main-content">
     <section aria-labelledby="contact-header">
       <h1 id="contact-header">Contact</h1>
-      <p>
-        If you want to get in touch, the best way is by email or by following me on social media.
-      </p>
-      <p>
-        I do not accept friend requests on Facebook, but you are welcome to follow.
-      </p>
+      <p>If you want to get in touch, the best way is by email or by following me on social media.</p>
+      <p>I do not accept friend requests on Facebook, but you are welcome to follow.</p>
     </section>
 
     <section aria-labelledby="email-header">
       <h2 id="email-header">Email</h2>
-      <p id="email-link" aria-live="polite></p>
-        <noscript>
+      <p id="email-link" aria-live="polite"></p>
+      <noscript>
         <p>Email: contact [at] bsteenkampwrites [dot] com</p>
-        </noscript>
+      </noscript>
     </section>
 
     <section aria-labelledby="social-header">
-      <h2 id="social-header">Social Media</h2>
+      <h2 id="social-header">Social media</h2>
       <ul>
         <li><a rel="me" href="https://mstdn.social/@brandtsteenkamp">Mastodon</a></li>
         <li><a href="https://instagram.com/steenkampbrandt">Instagram</a></li>
         <li><a href="https://twitter.com/BrandtSteenkamp">Twitter / X</a></li>
-        <li><a href="https://www.facebook.com/brandtsteenkamp/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.facebook.com/brandtsteenkamp/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
       </ul>
-      <p>
-        I am most commonly found on Mastodon and Instagram.
-      </p>
+      <p>I am most commonly found on Mastodon and Instagram.</p>
     </section>
   </main>
 
   <div id="footer-placeholder"></div>
 
+  <noscript>
+    <p>This site uses JavaScript to load navigation, accessibility controls, footer content, and the email link. JavaScript is currently disabled.</p>
+  </noscript>
+
   <script>
-    const user = 'contact';
-    const domain = 'bsteenkampwrites.com';
-    const subject = 'Website Contact';
-    const email = user + '@' + domain;
+    async function loadPartials() {
+      const partials = [
+        { url: "/nav.html", target: "nav-placeholder" },
+        { url: "/access.html", target: "access-placeholder" },
+        { url: "/foot.html", target: "footer-placeholder" }
+      ];
 
-    document.getElementById('email-link').innerHTML =
-      '<a href="mailto:' + email + '?subject=' + encodeURIComponent(subject) + '">' + email + '</a>';
+      try {
+        const responses = await Promise.all(
+          partials.map(async ({ url, target }) => {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+            }
+
+            const html = await response.text();
+            return { html, target };
+          })
+        );
+
+        responses.forEach(({ html, target }) => {
+          const container = document.getElementById(target);
+
+          if (!container) {
+            throw new Error(`Missing placeholder: #${target}`);
+          }
+
+          container.innerHTML = html;
+        });
+
+        const user = "contact";
+        const domain = "bsteenkampwrites.com";
+        const subject = "Website Contact";
+        const email = `${user}@${domain}`;
+
+        const emailContainer = document.getElementById("email-link");
+        if (emailContainer) {
+          emailContainer.innerHTML =
+            `<a href="mailto:${email}?subject=${encodeURIComponent(subject)}">${email}</a>`;
+        }
+
+        const script = document.createElement("script");
+        script.src = "/assets/accessibility.js";
+        script.defer = true;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error("Partial load failed:", error);
+      }
+    }
+
+    loadPartials();
   </script>
-
-<script>
-  Promise.all([
-    fetch('/nav.html').then(res => res.text()),
-    fetch('/foot.html').then(res => res.text())
-  ]).then(([nav, foot]) => {
-    document.getElementById('nav-placeholder').innerHTML = nav;
-    document.getElementById('footer-placeholder').innerHTML = foot;
-
-    const script = document.createElement('script');
-    script.src = '/assets/accessibility.js';
-    document.body.appendChild(script);
-  });
-</script>
 </body>
 </html>

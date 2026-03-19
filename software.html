@@ -12,102 +12,125 @@
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="nav-placeholder"></div>
+  <div id="access-placeholder"></div>
 
-<div id="nav-placeholder"></div>
+  <main id="main-content">
+    <section aria-labelledby="software-header">
+      <h1 id="software-header">Software</h1>
 
-<main id="main-content">
+      <p>
+        Alongside writing, I build and contribute to software projects, primarily focused on accessibility and tools for blind or low-vision users.
+      </p>
 
-<section aria-labelledby="software-header">
-<h1 id="software-header">Software</h1>
+      <p>
+        Most of the work is open source and lives on GitHub.
+      </p>
+    </section>
 
-<p>
-Alongside writing, I build and contribute to software projects, primarily focused on accessibility and tools for blind or low-vision users.
-</p>
+    <section aria-labelledby="projects-header">
+      <h2 id="projects-header">Projects</h2>
 
-<p>
-Most of the work is open source and lives on GitHub.
-</p>
-</section>
+      <article aria-labelledby="anvill-title">
+        <h3 id="anvill-title">anvill</h3>
 
+        <p>
+          anvill is an accessibility-focused toolchain for braille translation and publishing workflows, built using Swift, SwiftUI, and imported C libraries through a bridging header.
+        </p>
 
-<section aria-labelledby="projects-header">
+        <p>
+          It is designed to integrate braille translation tools such as Liblouis into a streamlined workflow for producing accessible documents.
+        </p>
 
-<h2 id="projects-header">Projects</h2>
+        <p>
+          For now, it is macOS-only.
+        </p>
 
-<article aria-labelledby="anvill-title">
+        <p>
+          <a href="https://github.com/brandt-steenkamp/anvill">View the anvill repository on GitHub</a>
+        </p>
+      </article>
 
-<h3 id="anvill-title">anvill</h3>
+      <article aria-labelledby="icecubes-title">
+        <h3 id="icecubes-title">Ice Cubes Contributions</h3>
 
-<p>
-anvill is an accessibility-focused toolchain for braille translation and publishing workflows, built using Swift, SwiftUI, and imported C libraries through a bridging header.
-</p>
+        <p>
+          Accessibility contributions to the Ice Cubes Mastodon client, including improvements to keyboard navigation and timeline interaction.
+        </p>
 
-<p>
-It is designed to integrate braille translation tools such as Liblouis into a streamlined workflow for producing accessible documents.
-</p>
+        <p>
+          The work focuses on making timelines more usable for keyboard and screen reader users.
+        </p>
 
-<p>
-For now, it is macOS-only.</p>
+        <p>
+          <a href="https://github.com/Dimillian/IceCubesApp">Ice Cubes project on GitHub</a>
+        </p>
+      </article>
+    </section>
 
-<p>
-<a href="https://github.com/brandt-steenkamp/anvill">View the anvill repository on GitHub</a>
-</p>
+    <section aria-labelledby="sourcecode-header">
+      <h2 id="sourcecode-header">Source Code</h2>
 
-</article>
+      <p>
+        Most projects and experiments are published on GitHub.
+      </p>
 
-<article aria-labelledby="icecubes-title">
+      <p>
+        <a href="https://github.com/brandt-steenkamp">Visit my GitHub profile</a>
+      </p>
+    </section>
+  </main>
 
-<h3 id="icecubes-title">Ice Cubes Contributions</h3>
+  <div id="footer-placeholder"></div>
 
-<p>
-Accessibility contributions to the Ice Cubes Mastodon client, including improvements to keyboard navigation and timeline interaction.
-</p>
+  <noscript>
+    <p>This site uses JavaScript to load navigation, accessibility controls, and footer content. JavaScript is currently disabled.</p>
+  </noscript>
 
-<p>
-The work focuses on making timelines more usable for keyboard and screen reader users.
-</p>
+  <script>
+    async function loadPartials() {
+      const partials = [
+        { url: "/nav.html", target: "nav-placeholder" },
+        { url: "/access.html", target: "access-placeholder" },
+        { url: "/foot.html", target: "footer-placeholder" }
+      ];
 
-<p>
-<a href="https://github.com/Dimillian/IceCubesApp">Ice Cubes project on GitHub</a>
-</p>
+      try {
+        const responses = await Promise.all(
+          partials.map(async ({ url, target }) => {
+            const response = await fetch(url);
 
-</article>
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+            }
 
-</section>
+            const html = await response.text();
+            return { html, target };
+          })
+        );
 
+        responses.forEach(({ html, target }) => {
+          const container = document.getElementById(target);
 
-<section aria-labelledby="sourcecode-header">
+          if (!container) {
+            throw new Error(`Missing placeholder: #${target}`);
+          }
 
-<h2 id="sourcecode-header">Source Code</h2>
+          container.innerHTML = html;
+        });
 
-<p>
-Most projects and experiments are published on GitHub.
-</p>
+        const script = document.createElement("script");
+        script.src = "/assets/accessibility.js";
+        script.defer = true;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error("Partial load failed:", error);
+      }
+    }
 
-<p>
-<a href="https://github.com/brandt-steenkamp">Visit my GitHub profile</a>
-</p>
-
-</section>
-
-</main>
-
-<div id="footer-placeholder"></div>
-
-<script>
-  Promise.all([
-    fetch('/nav.html').then(res => res.text()),
-    fetch('/foot.html').then(res => res.text())
-  ]).then(([nav, foot]) => {
-    document.getElementById('nav-placeholder').innerHTML = nav;
-    document.getElementById('footer-placeholder').innerHTML = foot;
-
-    const script = document.createElement('script');
-    script.src = '/assets/accessibility.js';
-    document.body.appendChild(script);
-  });
-</script>
+    loadPartials();
+  </script>
 </body>
 </html>

@@ -12,80 +12,89 @@
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="nav-placeholder"></div>
+  <div id="access-placeholder"></div>
 
-<div id="nav-placeholder"></div>
+  <main id="main-content">
+    <section aria-labelledby="about-header">
+      <h1 id="about-header">About</h1>
 
-<main id="main-content">
+      <p>My name is Brandt Steenkamp. I write satire, romance, essays, and the occasional technical rant.</p>
 
-<section aria-labelledby="about-header">
-<h1 id="about-header">About</h1>
+      <p>Alongside writing, I build and contribute to software projects, mainly focused on accessibility and tools for blind or low-vision users.</p>
 
-<p>
-My name is Brandt Steenkamp. I write satire, romance, essays, and the occasional technical rant.
-</p>
+      <p>This website is my home base on the internet. It hosts my satire, software projects, and eventually my books.</p>
 
-<p>
-Alongside writing, I build and contribute to software projects, mainly focused on accessibility and tools for blind or low-vision users.
-</p>
+      <p>The site is intentionally simple, fast, and accessible. No trackers, no ads, and no unnecessary nonsense.</p>
+    </section>
 
-<p>
-This website is my home base on the internet. It hosts my satire, software projects, and eventually my books.
-</p>
+    <section aria-labelledby="writing-header">
+      <h2 id="writing-header">Writing</h2>
 
-<p>
-The site is intentionally simple, fast, and accessible. No trackers, no ads, and no unnecessary nonsense.
-</p>
+      <p>My writing ranges from brutal satire to trauma-informed romance.</p>
 
-</section>
+      <p>Satire is where I sharpen the knives. Romance is where I put the heart back together again.</p>
+    </section>
 
+    <section aria-labelledby="software-header">
+      <h2 id="software-header">Software</h2>
 
-<section aria-labelledby="writing-header">
+      <p>I also work on accessibility-related software projects, particularly tools that make technology easier to use for blind users.</p>
 
-<h2 id="writing-header">Writing</h2>
+      <p>Most of this work is open source and available on GitHub.</p>
+    </section>
+  </main>
 
-<p>
-My writing ranges from brutal satire to trauma-informed romance.
-</p>
+  <div id="footer-placeholder"></div>
 
-<p>
-Satire is where I sharpen the knives. Romance is where I put the heart back together again.
-</p>
+  <noscript>
+    <p>This site uses JavaScript to load navigation, accessibility controls, and footer content. JavaScript is currently disabled.</p>
+  </noscript>
 
-</section>
+  <script>
+    async function loadPartials() {
+      const partials = [
+        { url: "/nav.html", target: "nav-placeholder" },
+        { url: "/access.html", target: "access-placeholder" },
+        { url: "/foot.html", target: "footer-placeholder" }
+      ];
 
+      try {
+        const responses = await Promise.all(
+          partials.map(async ({ url, target }) => {
+            const response = await fetch(url);
 
-<section aria-labelledby="software-header">
+            if (!response.ok) {
+              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+            }
 
-<h2 id="software-header">Software</h2>
+            const html = await response.text();
+            return { html, target };
+          })
+        );
 
-<p>
-I also work on accessibility-related software projects, particularly tools that make technology easier to use for blind users.
-</p>
+        responses.forEach(({ html, target }) => {
+          const container = document.getElementById(target);
 
-<p>
-Most of this work is open source and available on GitHub.
-</p>
+          if (!container) {
+            throw new Error(`Missing placeholder: #${target}`);
+          }
 
-</section>
+          container.innerHTML = html;
+        });
 
-</main>
+        const script = document.createElement("script");
+        script.src = "/assets/accessibility.js";
+        script.defer = true;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error("Partial load failed:", error);
+      }
+    }
 
-<div id="footer-placeholder"></div>
-
-<script>
-  Promise.all([
-    fetch('/nav.html').then(res => res.text()),
-    fetch('/foot.html').then(res => res.text())
-  ]).then(([nav, foot]) => {
-    document.getElementById('nav-placeholder').innerHTML = nav;
-    document.getElementById('footer-placeholder').innerHTML = foot;
-
-    const script = document.createElement('script');
-    script.src = '/assets/accessibility.js';
-    document.body.appendChild(script);
-  });
-</script>
+    loadPartials();
+  </script>
 </body>
 </html>
