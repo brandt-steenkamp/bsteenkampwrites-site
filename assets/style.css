@@ -151,6 +151,25 @@ a:focus {
   color: #000;
 }
 
+/* Form layout */
+form {
+  margin-top: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+#form-status {
+  margin-top: 0.9rem;
+}
+
 /* Form controls */
 button,
 input,
@@ -159,10 +178,44 @@ textarea {
   font: inherit;
 }
 
+input,
+select,
+textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+textarea {
+  min-height: 12rem;
+  resize: vertical;
+}
+
 button,
 input[type="checkbox"],
 input[type="radio"] {
   cursor: pointer;
+}
+
+form button,
+.accessibility-control button {
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+form button:hover,
+form button:focus,
+.accessibility-control button:hover,
+.accessibility-control button:focus {
+  background-color: var(--focus-bg);
+  color: #000;
 }
 
 button:focus,
@@ -184,7 +237,7 @@ nav a {
 /* Accessibility panel */
 .accessibility-panel {
   margin-top: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   padding: 1rem;
   border: 2px solid var(--border-color);
 }
@@ -199,13 +252,6 @@ nav a {
 
 .accessibility-control + .accessibility-control {
   margin-top: 1rem;
-}
-
-.accessibility-control button {
-  padding: 0.5rem 0.75rem;
-  border: 2px solid var(--border-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
 }
 
 .accessibility-control button[aria-pressed="true"] {
@@ -289,6 +335,14 @@ hr {
   .accessibility-panel {
     padding: 0.85rem;
   }
+
+  input,
+  select,
+  textarea,
+  form button,
+  .accessibility-control button {
+    padding: 0.7rem;
+  }
 }
 
 @media (max-width: 400px) {
@@ -298,7 +352,9 @@ hr {
   }
 }
 
-The main fix is this block:
+What changed, in plain English
+
+The real OpenDyslexic fix is here:
 
 body.font-dyslexic {
   --font-family-base: "OpenDyslexic", sans-serif;
@@ -307,7 +363,7 @@ body.font-dyslexic {
   word-spacing: 0.08em;
 }
 
-and this one:
+and here:
 
 body.font-dyslexic p,
 body.font-dyslexic li,
@@ -319,4 +375,34 @@ body.font-dyslexic select {
   line-height: 1.72;
   letter-spacing: 0.02em;
   word-spacing: 0.08em;
+}
+
+The form polish is mainly:
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+}
+
+textarea {
+  min-height: 12rem;
+}
+
+And the accessibility panel got a bit more breathing room:
+
+.accessibility-panel {
+  margin-bottom: 2.5rem;
 }
