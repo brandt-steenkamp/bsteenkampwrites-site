@@ -3,6 +3,7 @@
   src: url("/fonts/OpenDyslexic3-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
   src: url("/fonts/OpenDyslexic3-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 :root {
@@ -66,6 +68,28 @@ article {
 /* Font modes */
 body.font-dyslexic {
   --font-family-base: "OpenDyslexic", sans-serif;
+  line-height: 1.72;
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+}
+
+body.font-dyslexic p,
+body.font-dyslexic li,
+body.font-dyslexic blockquote,
+body.font-dyslexic input,
+body.font-dyslexic textarea,
+body.font-dyslexic button,
+body.font-dyslexic select {
+  line-height: 1.72;
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+}
+
+body.font-dyslexic h1,
+body.font-dyslexic h2,
+body.font-dyslexic h3 {
+  line-height: 1.35;
+  letter-spacing: 0.015em;
 }
 
 /* Width modes */
@@ -154,6 +178,7 @@ nav a {
   display: inline-block;
   margin-right: 0.75rem;
   margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
 /* Accessibility panel */
@@ -271,4 +296,27 @@ hr {
     padding: 0.75rem 0.5rem;
     font-size: 0.95rem;
   }
+}
+
+The main fix is this block:
+
+body.font-dyslexic {
+  --font-family-base: "OpenDyslexic", sans-serif;
+  line-height: 1.72;
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+}
+
+and this one:
+
+body.font-dyslexic p,
+body.font-dyslexic li,
+body.font-dyslexic blockquote,
+body.font-dyslexic input,
+body.font-dyslexic textarea,
+body.font-dyslexic button,
+body.font-dyslexic select {
+  line-height: 1.72;
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
 }
