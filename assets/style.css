@@ -65,6 +65,12 @@ article {
   margin-inline: auto;
 }
 
+.piece-card + .piece-card {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--border-color);
+}
+
 /* Font modes */
 body.font-dyslexic {
   --font-family-base: "OpenDyslexic", sans-serif;

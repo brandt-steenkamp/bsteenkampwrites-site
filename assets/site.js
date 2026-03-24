@@ -2,40 +2,41 @@ async function loadPartials() {
   const partials = [
     { url: "/nav.html", target: "nav-placeholder", required: true },
     { url: "/access.html", target: "access-placeholder", required: false },
+    { url: "/latest-satire.html", target: "latest-satire-placeholder", required: false },
     { url: "/foot.html", target: "footer-placeholder", required: false }
   ];
 
-  const loadJobs = partials.map(async ({ url, target, required }) => {
-    const container = document.getElementById(target);
-
-    if (!container) {
-      if (required) {
-        throw new Error(`Missing required placeholder: #${target}`);
-      }
-      return null;
-    }
-
-    const response = await fetch(url, { cache: "no-store" });
-
-    if (!response.ok) {
-      if (required) {
-        throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
-      }
-      console.warn(`Optional partial failed: ${url}: ${response.status} ${response.statusText}`);
-      return null;
-    }
-
-    const html = await response.text();
-    return { container, html };
-  });
-
   try {
-    const results = await Promise.all(loadJobs);
+    const results = await Promise.all(
+      partials.map(async ({ url, target, required }) => {
+        const container = document.getElementById(target);
 
-    results.forEach(result => {
-      if (!result) return;
+        if (!container) {
+          if (required) {
+            throw new Error(`Missing required placeholder: #${target}`);
+          }
+          return null;
+        }
+
+        const response = await fetch(url, { cache: "no-store" });
+
+        if (!response.ok) {
+          if (required) {
+            throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+          }
+          console.warn(`Optional partial failed: ${url}: ${response.status} ${response.statusText}`);
+          return null;
+        }
+
+        const html = await response.text();
+        return { container, html };
+      })
+    );
+
+    for (const result of results) {
+      if (!result) continue;
       result.container.innerHTML = result.html;
-    });
+    }
   } catch (error) {
     console.error("Partial load failed:", error);
   }
