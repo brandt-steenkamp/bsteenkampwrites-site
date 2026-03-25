@@ -1,0 +1,102 @@
+name: Update latest satire partial
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "satire/*.html"
+      - "index.html"
+      - ".github/workflows/update-latest-satire.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-latest-partial:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate latest-satire.html
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          satire_dir = Path("satire")
+          output_file = Path("latest-satire.html")
+
+          if not satire_dir.exists():
+              raise SystemExit("satire directory not found")
+
+          files = sorted(satire_dir.glob("*.html"))
+          if not files:
+              raise SystemExit("No satire HTML files found")
+
+          def extract(pattern, text, flags=re.IGNORECASE | re.DOTALL):
+              match = re.search(pattern, text, flags)
+              return match.group(1).strip() if match else None
+
+          pieces = []
+
+          for file in files:
+              html = file.read_text(encoding="utf-8")
+
+              published = extract(r'<time[^>]*datetime="([^"]+)"', html)
+              title = extract(r'<h1[^>]*id="page-title"[^>]*>(.*?)</h1>', html)
+              subtitle = extract(r'<p[^>]*class="subtitle"[^>]*>(.*?)</p>', html)
+
+              if not published or not title:
+                  continue
+
+              title = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", title)).strip()
+              if subtitle:
+                  subtitle = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", subtitle)).strip()
+
+              pieces.append({
+                  "published": published,
+                  "title": title,
+                  "subtitle": subtitle or "",
+                  "url": f"/satire/{file.name}"
+              })
+
+          if not pieces:
+              raise SystemExit("No valid satire pages with <time datetime> and page-title found")
+
+          latest = sorted(pieces, key=lambda x: x["published"], reverse=True)[0]
+
+          html = f'''<p>
+            <a id="radioactive-button" href="{latest["url"]}">
+              Read the latest satire: {latest["title"]}
+            </a>
+          </p>'''
+
+          output_file.write_text(html + "\n", encoding="utf-8")
+
+          print("Generated latest-satire.html for:")
+          print(latest["title"])
+          print(latest["url"])
+          print(latest["published"])
+          PY
+
+      - name: Commit updated partial
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add latest-satire.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "Update latest satire partial"
+          git push
