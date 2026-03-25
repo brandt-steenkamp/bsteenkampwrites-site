@@ -25,12 +25,22 @@
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div id="nav-placeholder"></div>
+  <div id="access-placeholder"></div>
 
   <main id="main-content">
-    <article aria-labelledby="page-title">
+    <article aria-labelledby="page-title" aria-describedby="article-subtitle article-meta">
       <header>
         <h1 id="page-title">Windows Is Watching You</h1>
-        <p><strong>A Spyware Rage Rant in the Voice of Bill Gates</strong></p>
+
+        <p id="article-subtitle" class="subtitle">
+          A Spyware Rage Rant in the Voice of Bill Gates
+        </p>
+
+        <p id="article-meta" class="meta">
+          <time datetime="2026-03-25T10:00:00+02:00">
+            Published 25 March 2026, 10:00 SAST
+          </time>
+        </p>
       </header>
 
       <p>You ever build something so big, so revolutionary, that it takes over the entire fucking world, and then realize years later it has become a bloated, spying, update-addicted freak you would not trust to butter your toast?</p>
@@ -205,22 +215,28 @@
 
       <p>Because updates are installing, whether you want them or not.</p>
     </article>
+
+    <section class="support-box" aria-labelledby="support-heading">
+      <h2 id="support-heading">Enjoyed this piece?</h2>
+
+      <p>
+        If this satire earned its keep, you can
+        <a href="https://paypal.me/brandtsteenkamp" rel="noopener noreferrer">buy me a beer</a>.
+      </p>
+
+      <p>
+        Coffee I make myself. Beer I can't.
+        Cider I might attempt, but the result will be legally and morally questionable.
+      </p>
+    </section>
   </main>
 
   <div id="footer-placeholder"></div>
 
-  <script>
-    fetch('/nav.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('nav-placeholder').innerHTML = data;
-      });
+  <noscript>
+    <p>This site uses JavaScript to load navigation, accessibility controls, and footer content. JavaScript is currently disabled.</p>
+  </noscript>
 
-    fetch('/foot.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('footer-placeholder').innerHTML = data;
-      });
-  </script>
+  <script src="/assets/site.js" defer></script>
 </body>
 </html>
