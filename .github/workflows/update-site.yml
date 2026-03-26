@@ -8,13 +8,13 @@ on:
       - "**/*.html"
       - ".scripts/update-site.py"
       - ".github/workflows/update-site.yml"
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   update-site-artifacts:
+    if: github.ref == 'refs/heads/testing'
     runs-on: ubuntu-latest
 
     steps:
