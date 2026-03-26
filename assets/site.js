@@ -3,6 +3,7 @@ async function loadPartials() {
     { url: "/nav.html", target: "nav-placeholder", required: true },
     { url: "/access.html", target: "access-placeholder", required: false },
     { url: "/latest-satire.html", target: "latest-satire-placeholder", required: false },
+    { url: "/share.html", target: "share-placeholder", required: false },
     { url: "/foot.html", target: "footer-placeholder", required: false }
   ];
 
@@ -18,18 +19,28 @@ async function loadPartials() {
           return null;
         }
 
-        const response = await fetch(url, { cache: "no-store" });
+        try {
+          const response = await fetch(url, { cache: "no-store" });
 
-        if (!response.ok) {
-          if (required) {
-            throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+          if (!response.ok) {
+            if (required) {
+              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+            }
+
+            console.warn(`Optional partial failed: ${url}: ${response.status} ${response.statusText}`);
+            return null;
           }
-          console.warn(`Optional partial failed: ${url}: ${response.status} ${response.statusText}`);
+
+          const html = await response.text();
+          return { container, html };
+        } catch (error) {
+          if (required) {
+            throw error;
+          }
+
+          console.warn(`Optional partial failed: ${url}`, error);
           return null;
         }
-
-        const html = await response.text();
-        return { container, html };
       })
     );
 
@@ -43,6 +54,7 @@ async function loadPartials() {
 
   buildEmailLink();
   loadAccessibilityScript();
+  initSharePanel();
 }
 
 function buildEmailLink() {
@@ -61,7 +73,7 @@ function buildEmailLink() {
     87, 101, 98, 115, 105, 116, 101, 32, 67, 111, 110, 116, 97, 99, 116
   ];
 
-  const decode = codes => String.fromCharCode(...codes);
+  const decode = (codes) => String.fromCharCode(...codes);
 
   const email = decode(addressCodes);
   const subject = decode(subjectCodes);
@@ -75,13 +87,21 @@ function buildEmailLink() {
 
 function loadAccessibilityScript() {
   const accessContainer = document.getElementById("access-placeholder");
-  if (!accessContainer || !accessContainer.innerHTML.trim()) return;
+
+  if (!accessContainer) return;
+  if (!accessContainer.innerHTML.trim()) return;
   if (document.querySelector('script[src="/assets/accessibility.js"]')) return;
 
   const script = document.createElement("script");
   script.src = "/assets/accessibility.js";
   script.defer = true;
   document.body.appendChild(script);
+}
+
+function initSharePanel() {
+  if (typeof window.initSharePanel === "function") {
+    window.initSharePanel();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", loadPartials);
