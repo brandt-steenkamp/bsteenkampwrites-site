@@ -1,0 +1,43 @@
+name: Update site artifacts
+
+on:
+  push:
+    branches:
+      - testing
+    paths:
+      - "**/*.html"
+      - ".scripts/update-site.py"
+      - ".github/workflows/update-site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-site-artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate latest-satire.html and sitemap.xml
+        shell: bash
+        run: |
+          python3 .scripts/update-site.py
+
+      - name: Commit updated artifacts
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add latest-satire.html sitemap.xml
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "Update site artifacts"
+          git push
