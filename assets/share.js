@@ -63,7 +63,7 @@
 
   function getStatusElement(panel) {
     if (!panel) return null;
-    return panel.querySelector("#share-status") || panel.querySelector(".share-status");
+    return panel.querySelector(".share-status");
   }
 
   function setStatus(panel, message) {
@@ -87,7 +87,11 @@
       throw new Error("No text to copy.");
     }
 
-    if (window.isSecureContext && navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+    if (
+      window.isSecureContext &&
+      navigator.clipboard &&
+      typeof navigator.clipboard.writeText === "function"
+    ) {
       await navigator.clipboard.writeText(text);
       return;
     }
@@ -239,7 +243,6 @@
 
   function initSharePanel() {
     const panels = document.querySelectorAll(".share-panel");
-    if (!panels.length) return;
 
     panels.forEach(function (panel) {
       wireShareLinks(panel);
