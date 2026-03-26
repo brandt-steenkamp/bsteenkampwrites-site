@@ -36,7 +36,7 @@
   --radioactive-shadow: #000;
 }
 
-/* Global reset */
+/* Reset */
 *,
 *::before,
 *::after {
@@ -58,13 +58,11 @@ body {
   color: var(--text-color);
 }
 
-/* Keep overall page layout sane */
 body > * {
   max-width: var(--page-max-width);
   margin-inline: auto;
 }
 
-/* Constrain actual reading content only */
 main,
 article {
   max-width: var(--reading-width);
@@ -105,32 +103,19 @@ body.font-dyslexic h3 {
 }
 
 /* Width modes */
-body.width-standard {
-  --reading-width: 70ch;
-}
-
-body.width-narrow {
-  --reading-width: 60ch;
-}
-
-body.width-extra {
-  --reading-width: 55ch;
-}
+body.width-standard { --reading-width: 70ch; }
+body.width-narrow { --reading-width: 60ch; }
+body.width-extra { --reading-width: 55ch; }
 
 /* Typography */
-p {
-  margin: 0 0 1rem;
-}
+p { margin: 0 0 1rem; }
 
 ul,
 ol {
   margin: 0 0 1rem 1.5rem;
-  padding: 0;
 }
 
-li + li {
-  margin-top: 0.35rem;
-}
+li + li { margin-top: 0.35rem; }
 
 h1,
 h2,
@@ -141,19 +126,15 @@ h3 {
 }
 
 h2,
-h3 {
-  margin-top: 1.75rem;
-}
+h3 { margin-top: 1.75rem; }
 
-/* Links, general site links only */
+/* Links */
 a {
   color: var(--link-color);
   text-decoration: underline;
 }
 
-a:visited {
-  color: var(--link-visited);
-}
+a:visited { color: var(--link-visited); }
 
 a:hover,
 a:focus {
@@ -163,83 +144,30 @@ a:focus {
   color: #000;
 }
 
-/* Radioactive latest satire control */
-#latest-satire-placeholder {
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-#latest-satire-placeholder p {
-  margin: 0;
-}
-
+/* Radioactive button */
 #radioactive-button {
   all: unset;
   display: inline-block;
-  max-width: 100%;
   cursor: pointer;
 
   padding: 0.9rem 1.25rem;
   border: 3px solid var(--border-color);
   background-color: var(--radioactive-bg);
-  color: var(--radioactive-fg);
-  font: inherit;
   font-weight: 700;
-  line-height: 1.3;
-  text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  text-decoration: none;
+  text-align: center;
 
   box-shadow: 0.2rem 0.2rem 0 0 var(--radioactive-shadow);
-}
-
-#radioactive-button:link,
-#radioactive-button:visited {
-  color: var(--radioactive-fg);
-  text-decoration: none;
 }
 
 #radioactive-button:hover,
 #radioactive-button:focus {
   background-color: var(--radioactive-hover-bg);
   color: var(--radioactive-hover-fg);
-  outline: var(--focus-outline);
-  outline-offset: 3px;
-  text-decoration: none;
 }
 
-#radioactive-button:active {
-  transform: translate(2px, 2px);
-  box-shadow: none;
-}
-
-#radioactive-button::before {
-  content: "☢ ";
-}
-
-#radioactive-button::after {
-  content: " ☢";
-}
-
-/* Form layout */
-form {
-  margin-top: 1.5rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-#form-status {
-  margin-top: 0.9rem;
-}
+#radioactive-button::before { content: "☢ "; }
+#radioactive-button::after { content: " ☢"; }
 
 /* Form controls */
 button,
@@ -253,16 +181,8 @@ input,
 select,
 textarea {
   width: 100%;
-  max-width: 100%;
   padding: 0.75rem;
   border: 2px solid var(--border-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-textarea {
-  min-height: 12rem;
-  resize: vertical;
 }
 
 button,
@@ -271,79 +191,53 @@ input[type="radio"] {
   cursor: pointer;
 }
 
-form button,
-.accessibility-control button {
-  padding: 0.75rem 1.1rem;
-  border: 2px solid var(--border-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-weight: 700;
-}
-
-form button:hover,
-form button:focus,
-.accessibility-control button:hover,
-.accessibility-control button:focus {
-  background-color: var(--focus-bg);
-  color: #000;
-}
-
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-  outline: var(--focus-outline);
-  outline-offset: 2px;
-}
-
-/* Navigation */
-nav a {
-  display: inline-block;
-  margin-right: 0.75rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-}
-
 /* Accessibility panel */
 .accessibility-panel {
-  margin-top: 1.5rem;
-  margin-bottom: 2.5rem;
+  margin: 1.5rem 0 2.5rem;
   padding: 1rem;
   border: 2px solid var(--border-color);
-}
-
-.accessibility-panel h2 {
-  margin-top: 0;
-}
-
-.accessibility-panel p {
-  margin-bottom: 1rem;
 }
 
 .accessibility-control + .accessibility-control {
   margin-top: 1rem;
 }
 
-.accessibility-control button[aria-pressed="true"] {
-  background-color: var(--focus-bg);
+/* CENTER FONT BUTTON */
+.accessibility-control button {
+  display: block;
+  margin-inline: auto;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--border-color);
+  font-weight: 700;
 }
 
+/* FIELDSET LAYOUT FIX */
 fieldset.accessibility-control {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--border-color);
   padding: 0.75rem 1rem 1rem;
 }
 
-fieldset.accessibility-control legend {
-  font-weight: 700;
-  padding: 0 0.25rem;
+/* RADIO ITEM */
+fieldset.accessibility-control > div {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
 }
 
-.accessibility-control label {
-  margin-left: 0.35rem;
-}
-
+/* KILL OLD STACKING */
 .accessibility-control div + div {
-  margin-top: 0.5rem;
+  margin-top: 0;
+}
+
+/* Labels */
+.accessibility-control label {
+  margin-left: 0.25rem;
 }
 
 /* Footer */
@@ -351,74 +245,17 @@ footer nav a {
   margin-right: 0.5rem;
 }
 
-/* Horizontal rule */
-hr {
-  border: none;
-  border-top: 2px solid var(--border-color);
-  margin: 2rem 0;
-}
-
-/* Skip link */
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-}
-
-.skip-link:focus {
-  position: static;
-  display: inline-block;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: var(--focus-bg);
-  color: #000;
-  outline: var(--focus-outline);
-}
-
-/* Screen-reader-only content */
+/* Utility */
 .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
-  margin: -1px;
   overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 /* Responsive */
-@media (max-width: 900px) {
-  body {
-    padding: 1.5rem 1rem;
-    font-size: 1.1rem;
-  }
-}
-
 @media (max-width: 600px) {
-  body {
-    padding: 1rem 0.75rem;
-    font-size: 1rem;
-  }
-
-  .accessibility-panel {
-    padding: 0.85rem;
-  }
-
-  input,
-  select,
-  textarea,
-  form button,
-  .accessibility-control button,
-  #radioactive-button {
-    padding: 0.7rem;
-  }
-}
-
-@media (max-width: 400px) {
-  body {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.95rem;
+  fieldset.accessibility-control {
+    justify-content: flex-start;
   }
 }
