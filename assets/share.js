@@ -82,35 +82,41 @@
     }, 4000);
   }
 
-  function copyToClipboard(text) {
-    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-      return navigator.clipboard.writeText(text);
+  async function copyToClipboard(text) {
+    if (!text) {
+      throw new Error("No text to copy.");
     }
 
-    return new Promise(function (resolve, reject) {
-      const helper = document.createElement("textarea");
-      helper.value = text;
-      helper.setAttribute("readonly", "");
-      helper.setAttribute("aria-hidden", "true");
-      helper.style.position = "absolute";
-      helper.style.left = "-9999px";
-      document.body.appendChild(helper);
-      helper.select();
+    if (window.isSecureContext && navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
 
-      try {
-        const success = document.execCommand("copy");
-        document.body.removeChild(helper);
+    const helper = document.createElement("textarea");
+    helper.value = text;
+    helper.setAttribute("readonly", "");
+    helper.setAttribute("aria-hidden", "true");
+    helper.style.position = "fixed";
+    helper.style.top = "0";
+    helper.style.left = "-9999px";
+    helper.style.opacity = "0";
 
-        if (success) {
-          resolve();
-        } else {
-          reject(new Error("Copy command failed."));
-        }
-      } catch (error) {
-        document.body.removeChild(helper);
-        reject(error);
-      }
-    });
+    document.body.appendChild(helper);
+    helper.focus();
+    helper.select();
+    helper.setSelectionRange(0, helper.value.length);
+
+    let success = false;
+
+    try {
+      success = document.execCommand("copy");
+    } finally {
+      document.body.removeChild(helper);
+    }
+
+    if (!success) {
+      throw new Error("Fallback copy failed.");
+    }
   }
 
   function buildShareData() {
@@ -215,16 +221,16 @@
     }
 
     if (copyButton) {
-      copyButton.addEventListener("click", function () {
-        copyToClipboard(shareData.url)
-          .then(function () {
-            setStatus(panel, "Link copied.");
-            clearStatusLater(panel);
-          })
-          .catch(function () {
-            setStatus(panel, "Copy failed. Please copy the link manually.");
-            clearStatusLater(panel);
-          });
+      copyButton.addEventListener("click", async function () {
+        try {
+          await copyToClipboard(shareData.url);
+          setStatus(panel, "Link copied.");
+          clearStatusLater(panel);
+        } catch (error) {
+          console.error("Copy failed:", error);
+          setStatus(panel, "Copy failed. Please copy the link manually.");
+          clearStatusLater(panel);
+        }
       });
     }
 
@@ -233,7 +239,6 @@
 
   function initSharePanel() {
     const panels = document.querySelectorAll(".share-panel");
-
     if (!panels.length) return;
 
     panels.forEach(function (panel) {
