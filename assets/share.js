@@ -217,7 +217,10 @@
     if (downloadLink) {
       if (links.downloadImage) {
         downloadLink.href = links.downloadImage;
-        downloadLink.setAttribute("download", slugifyFilename(shareData.title) + ".png");
+        downloadLink.setAttribute(
+          "download",
+          slugifyFilename(shareData.title) + ".png"
+        );
         downloadLink.removeAttribute("aria-disabled");
       } else {
         disableDownloadLink(panel, downloadLink);
@@ -241,7 +244,7 @@
     panel.dataset.shareWired = "true";
   }
 
-  function initSharePanel() {
+  function setupSharePanel() {
     const panels = document.querySelectorAll(".share-panel");
 
     panels.forEach(function (panel) {
@@ -249,9 +252,11 @@
     });
   }
 
-  window.initSharePanel = initSharePanel;
+  window.setupSharePanel = setupSharePanel;
 
   if (document.readyState !== "loading") {
-    initSharePanel();
+    setupSharePanel();
+  } else {
+    document.addEventListener("DOMContentLoaded", setupSharePanel, { once: true });
   }
 })();

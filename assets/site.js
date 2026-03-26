@@ -9,7 +9,7 @@ async function loadPartials() {
 
   try {
     const results = await Promise.all(
-      partials.map(async ({ url, target, required }) => {
+      partials.map(async function ({ url, target, required }) {
         const container = document.getElementById(target);
 
         if (!container) {
@@ -24,10 +24,14 @@ async function loadPartials() {
 
           if (!response.ok) {
             if (required) {
-              throw new Error(`Failed to load ${url}: ${response.status} ${response.statusText}`);
+              throw new Error(
+                `Failed to load ${url}: ${response.status} ${response.statusText}`
+              );
             }
 
-            console.warn(`Optional partial failed: ${url}: ${response.status} ${response.statusText}`);
+            console.warn(
+              `Optional partial failed: ${url}: ${response.status} ${response.statusText}`
+            );
             return null;
           }
 
@@ -54,7 +58,10 @@ async function loadPartials() {
 
   buildEmailLink();
   loadAccessibilityScript();
-  initSharePanel();
+
+  if (typeof window.setupSharePanel === "function") {
+    window.setupSharePanel();
+  }
 }
 
 function buildEmailLink() {
@@ -73,7 +80,9 @@ function buildEmailLink() {
     87, 101, 98, 115, 105, 116, 101, 32, 67, 111, 110, 116, 97, 99, 116
   ];
 
-  const decode = (codes) => String.fromCharCode(...codes);
+  function decode(codes) {
+    return String.fromCharCode(...codes);
+  }
 
   const email = decode(addressCodes);
   const subject = decode(subjectCodes);
@@ -96,12 +105,6 @@ function loadAccessibilityScript() {
   script.src = "/assets/accessibility.js";
   script.defer = true;
   document.body.appendChild(script);
-}
-
-function initSharePanel() {
-  if (typeof window.initSharePanel === "function") {
-    window.initSharePanel();
-  }
 }
 
 document.addEventListener("DOMContentLoaded", loadPartials);
