@@ -28,6 +28,12 @@
   --text-color: #000;
   --bg-color: #fff;
   --border-color: #000;
+
+  --radioactive-bg: #ffff00;
+  --radioactive-fg: #000;
+  --radioactive-hover-bg: #000;
+  --radioactive-hover-fg: #ffff00;
+  --radioactive-shadow: #000;
 }
 
 /* Global reset */
@@ -139,7 +145,7 @@ h3 {
   margin-top: 1.75rem;
 }
 
-/* Links */
+/* Links, general site links only */
 a {
   color: var(--link-color);
   text-decoration: underline;
@@ -155,6 +161,65 @@ a:focus {
   outline-offset: 2px;
   background-color: var(--focus-bg);
   color: #000;
+}
+
+/* Radioactive latest satire control */
+#latest-satire-placeholder {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+#latest-satire-placeholder p {
+  margin: 0;
+}
+
+#radioactive-button {
+  all: unset;
+  display: inline-block;
+  max-width: 100%;
+  cursor: pointer;
+
+  padding: 0.9rem 1.25rem;
+  border: 3px solid var(--border-color);
+  background-color: var(--radioactive-bg);
+  color: var(--radioactive-fg);
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+
+  box-shadow: 0.2rem 0.2rem 0 0 var(--radioactive-shadow);
+}
+
+#radioactive-button:link,
+#radioactive-button:visited {
+  color: var(--radioactive-fg);
+  text-decoration: none;
+}
+
+#radioactive-button:hover,
+#radioactive-button:focus {
+  background-color: var(--radioactive-hover-bg);
+  color: var(--radioactive-hover-fg);
+  outline: var(--focus-outline);
+  outline-offset: 3px;
+  text-decoration: none;
+}
+
+#radioactive-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+#radioactive-button::before {
+  content: "☢ ";
+}
+
+#radioactive-button::after {
+  content: " ☢";
 }
 
 /* Form layout */
@@ -189,7 +254,6 @@ select,
 textarea {
   width: 100%;
   max-width: 100%;
-  box-sizing: border-box;
   padding: 0.75rem;
   border: 2px solid var(--border-color);
   background-color: var(--bg-color);
@@ -346,7 +410,8 @@ hr {
   select,
   textarea,
   form button,
-  .accessibility-control button {
+  .accessibility-control button,
+  #radioactive-button {
     padding: 0.7rem;
   }
 }
@@ -356,59 +421,4 @@ hr {
     padding: 0.75rem 0.5rem;
     font-size: 0.95rem;
   }
-}
-
-What changed, in plain English
-
-The real OpenDyslexic fix is here:
-
-body.font-dyslexic {
-  --font-family-base: "OpenDyslexic", sans-serif;
-  line-height: 1.72;
-  letter-spacing: 0.02em;
-  word-spacing: 0.08em;
-}
-
-and here:
-
-body.font-dyslexic p,
-body.font-dyslexic li,
-body.font-dyslexic blockquote,
-body.font-dyslexic input,
-body.font-dyslexic textarea,
-body.font-dyslexic button,
-body.font-dyslexic select {
-  line-height: 1.72;
-  letter-spacing: 0.02em;
-  word-spacing: 0.08em;
-}
-
-The form polish is mainly:
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid var(--border-color);
-}
-
-textarea {
-  min-height: 12rem;
-}
-
-And the accessibility panel got a bit more breathing room:
-
-.accessibility-panel {
-  margin-bottom: 2.5rem;
 }
