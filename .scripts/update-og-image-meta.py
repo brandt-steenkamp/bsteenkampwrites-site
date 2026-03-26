@@ -62,7 +62,13 @@ def update_article_meta(article_path: Path) -> tuple[bool, str]:
     og_image_url = build_og_image_url(article_path)
 
     updated = html_text
+
+    # Open Graph (Facebook and others)
     updated = upsert_meta_tag(updated, "property", "og:image", og_image_url)
+    updated = upsert_meta_tag(updated, "property", "og:image:secure_url", og_image_url)
+    updated = upsert_meta_tag(updated, "property", "og:image:type", "image/png")
+
+    # Twitter
     updated = upsert_meta_tag(updated, "name", "twitter:card", "summary_large_image")
     updated = upsert_meta_tag(updated, "name", "twitter:image", og_image_url)
 
